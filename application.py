@@ -1,7 +1,18 @@
 from flask import Flask
+import logging
+
 
 # print a nice greeting.
 def say_hello(username = "World"):
+    logger = logging.getLogger()
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+            '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+
+    logger.debug("HelloWorld {}".format(username))
     return '<p>Hello %s!</p>\n' % username
 
 # some bits of text for the page.
