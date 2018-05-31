@@ -12,7 +12,7 @@ def say_hello(username = "World"):
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
 
-    logger.debug("HelloWorld {}".format(username))
+    logger.info("HelloWorld {}".format(username))
     return '<p>Hello %s!</p>\n' % username
 
 # some bits of text for the page.
