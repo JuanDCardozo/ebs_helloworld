@@ -29,7 +29,7 @@ filebeat.prospectors:
   - /var/log/*.log
   - /var/lib/docker/containers/*/*.log
 output.elasticsearch:
-  hosts: ['http://18.221.239.75:9200']" > /etc/filebeat/filebeat.yml
+  hosts: ['url']" > /etc/filebeat/filebeat.yml
 
 echo "*****************Setting start of filebeat on boot*********************"
 sudo chkconfig --add filebeat
