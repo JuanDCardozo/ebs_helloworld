@@ -1,0 +1,38 @@
+#!/bin/bash
+
+echo "******************Registering with cluster*******************************"
+echo "ECS_CLUSTER=ecs-filebeat2" >> /etc/ecs/ecs.config
+
+echo "******************Getting Filebeat GPG-KEY*******************************"
+sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+
+echo "******************Setting filebeat.repo file*****************************"
+echo "
+[elastic-6.x]
+name=Elastic repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md" > /etc/yum.repos.d/filebeat.repo
+
+echo "******************Installing filebeat using yum install*****************"
+sudo yum install -y filebeat
+
+echo "******************Setting filebeat.yml**********************************"
+echo "
+filebeat.prospectors:
+- type: log
+  enabled: true
+  paths:
+  - /var/log/*.log
+  - /var/lib/docker/containers/*/*.log
+output.elasticsearch:
+  hosts: ['http://18.221.239.75:9200']" > /etc/filebeat/filebeat.yml
+
+echo "*****************Setting start of filebeat on boot*********************"
+sudo chkconfig --add filebeat
+
+echo "*****************Starting filebeat*************************************"
+/etc/init.d/filebeat start
