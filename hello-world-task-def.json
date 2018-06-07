@@ -1,0 +1,17 @@
+{
+    "family": "hello-world",
+    "containerDefinitions": [
+        {
+            "name": "hello-world",
+            "image": "099046762260.dkr.ecr.us-west-2.amazonaws.com/hello-world",
+            "cpu": 10,
+            "memory": 500,
+            "portMappings": [
+                {
+                    "containerPort": 5000,
+                    "hostPort": 5000
+                }
+            ]
+        }
+    ]
+}
